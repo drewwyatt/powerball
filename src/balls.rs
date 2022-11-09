@@ -1,6 +1,6 @@
 use rand::prelude::*;
 
-pub fn draw_white() -> [i8; 5] {
+fn draw_white() -> [i8; 5] {
   let mut rng = rand::thread_rng();
   let mut all_balls = (1..=69).collect::<Vec<i8>>();
   all_balls.shuffle(&mut rng);
@@ -13,6 +13,22 @@ pub fn draw_white() -> [i8; 5] {
   selections
 }
 
-pub fn draw_powerball() -> i8 {
+fn draw_powerball() -> i8 {
   rand::thread_rng().gen_range(1..26)
+}
+
+
+
+pub struct Draw {
+  pub powerball: i8,
+  pub white_balls: [i8; 5],
+}
+
+impl Draw {
+  pub fn new() -> Draw {
+    Draw {
+      powerball: draw_powerball(),
+      white_balls: draw_white(),
+    }
+  }
 }

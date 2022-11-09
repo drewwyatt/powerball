@@ -1,10 +1,8 @@
 mod balls;
-use balls::{draw_white, draw_powerball};
 
 fn main() {
-    let white_balls = draw_white();
-    let powerball = draw_powerball();
+    let winners = balls::Draw::new();
 
-    println!("white: {:?}", white_balls);
-    println!("powerball: {}", powerball);
+    println!("white: {:?}", winners.white_balls);
+    println!("powerball: {}", winners.powerball);
 }
