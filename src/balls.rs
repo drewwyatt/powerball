@@ -14,10 +14,8 @@ fn draw_white() -> [i8; 5] {
 }
 
 fn draw_powerball() -> i8 {
-  rand::thread_rng().gen_range(1..26)
+  rand::thread_rng().gen_range(1..=26)
 }
-
-
 
 pub struct Draw {
   pub powerball: i8,
@@ -25,10 +23,14 @@ pub struct Draw {
 }
 
 impl Draw {
-  pub fn new() -> Draw {
+  pub fn from(white_balls: [i8; 5], powerball: i8) -> Draw {
     Draw {
-      powerball: draw_powerball(),
-      white_balls: draw_white(),
+      powerball: powerball,
+      white_balls: white_balls,
     }
+  }
+
+  pub fn new() -> Draw {
+    Draw::from(draw_white(), draw_powerball())
   }
 }
