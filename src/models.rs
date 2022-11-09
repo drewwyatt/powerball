@@ -17,6 +17,15 @@ fn draw_powerball() -> i8 {
   rand::thread_rng().gen_range(1..=26)
 }
 
+pub enum Prize {
+  FourDollars,
+  SevenDollars,
+  OneHundredDollars,
+  FiftyThousandDollars,
+  OneMillionDollars,
+  Jackpot
+}
+
 pub struct Draw {
   pub powerball: i8,
   pub white_balls: [i8; 5],
@@ -35,13 +44,28 @@ impl Draw {
   pub fn new() -> Draw {
     Draw::from(draw_white(), draw_powerball())
   }
-}
 
-impl PartialEq for Draw {
-  fn eq(&self, other: &Draw) -> bool {
-    self.white_balls == other.white_balls && self.powerball == other.powerball
+  pub fn get_prize(&self, winners: &Draw) -> Option<Prize> {
+    match (self.get_matches(winners), self.powerball == winners.powerball) {
+      (5, true) => Some(Prize::Jackpot),
+      (5, _) => Some(Prize::OneMillionDollars),
+      (4, true) => Some(Prize::FiftyThousandDollars),
+      (4, _) | (3, true) => Some(Prize::OneHundredDollars),
+      (3, _) | (2, true) => Some(Prize::SevenDollars),
+      (1, _) => Some(Prize::FourDollars),
+      _ => None,
+    }
+  }
+
+  fn get_matches(&self, winners: &Draw) -> i8 {
+    let mut matches = 0;
+    for ball in &self.white_balls {
+      if winners.white_balls.contains(ball) {
+        matches += 1;
+      }
+    }
+
+    matches
   }
 }
 
-impl Eq for Draw {
-}
