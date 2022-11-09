@@ -26,6 +26,7 @@ pub enum Prize {
   Jackpot
 }
 
+#[derive(Clone, Copy)]
 pub struct Numbers {
   pub powerball: i8,
   pub white_balls: [i8; 5],
@@ -66,6 +67,43 @@ impl Numbers {
     }
 
     matches
+  }
+}
+
+pub struct Winners {
+  pub four_dollars: i64,
+  pub seven_dollars: i64,
+  pub one_hundred_dollars: i64,
+  pub fifty_thousand_dollars: i64,
+  pub one_million_dollars: i64,
+  pub jackpot: i8,
+}
+
+impl Winners {
+  pub fn new() -> Winners {
+      Winners {
+          four_dollars: 0,
+          seven_dollars: 0,
+          one_hundred_dollars: 0,
+          fifty_thousand_dollars: 0,
+          one_million_dollars: 0,
+          jackpot: 0,
+      }
+  }
+
+  pub fn has_jackpot(&self) -> bool {
+    self.jackpot > 0
+  }
+
+  pub fn record(&mut self, prize: Prize) {
+      match prize {
+          Prize::FourDollars => self.four_dollars += 1,
+          Prize::SevenDollars => self.seven_dollars += 1,
+          Prize::OneHundredDollars => self.one_hundred_dollars += 1,
+          Prize::FiftyThousandDollars => self.fifty_thousand_dollars += 1,
+          Prize::OneMillionDollars => self.one_million_dollars += 1,
+          Prize::Jackpot => self.jackpot += 1,
+      }
   }
 }
 
