@@ -1,3 +1,4 @@
+use std::fmt;
 use rand::prelude::*;
 
 fn draw_white() -> [i8; 5] {
@@ -104,6 +105,30 @@ impl Winners {
           Prize::OneMillionDollars => self.one_million_dollars += 1,
           Prize::Jackpot => self.jackpot += 1,
       }
+  }
+}
+
+// impl ToString for Winners {
+//     fn to_string(&self) -> String {
+//         format!("winners: [$4: {}] [$7: {}] [$100: {}] [$50k: {}] [$1m: {}]",
+//           self.four_dollars,
+//           self.seven_dollars,
+//           self.one_hundred_dollars,
+//           self.fifty_thousand_dollars,
+//           self.one_million_dollars,
+//         )
+//     }
+// }
+
+impl fmt::Display for Winners {
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+      write!(f, "[$4: {}] [$7: {}] [$100: {}] [$50k: {}] [$1m: {}]",
+        self.four_dollars,
+        self.seven_dollars,
+        self.one_hundred_dollars,
+        self.fifty_thousand_dollars,
+        self.one_million_dollars,
+      )
   }
 }
 
