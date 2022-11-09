@@ -26,26 +26,26 @@ pub enum Prize {
   Jackpot
 }
 
-pub struct Draw {
+pub struct Numbers {
   pub powerball: i8,
   pub white_balls: [i8; 5],
 }
 
-impl Draw {
-  pub fn from(white_balls: [i8; 5], powerball: i8) -> Draw {
+impl Numbers {
+  pub fn new(white_balls: [i8; 5], powerball: i8) -> Numbers {
     let mut sorted = white_balls.clone();
     sorted.sort();
-    Draw {
+    Numbers {
       powerball: powerball,
       white_balls: sorted,
     }
   }
 
-  pub fn new() -> Draw {
-    Draw::from(draw_white(), draw_powerball())
+  pub fn draw() -> Numbers {
+    Numbers::new(draw_white(), draw_powerball())
   }
 
-  pub fn get_prize(&self, winners: &Draw) -> Option<Prize> {
+  pub fn get_prize(&self, winners: &Numbers) -> Option<Prize> {
     match (self.get_matches(winners), self.powerball == winners.powerball) {
       (5, true) => Some(Prize::Jackpot),
       (5, _) => Some(Prize::OneMillionDollars),
@@ -57,7 +57,7 @@ impl Draw {
     }
   }
 
-  fn get_matches(&self, winners: &Draw) -> i8 {
+  fn get_matches(&self, winners: &Numbers) -> i8 {
     let mut matches = 0;
     for ball in &self.white_balls {
       if winners.white_balls.contains(ball) {
