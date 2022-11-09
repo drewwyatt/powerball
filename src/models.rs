@@ -24,13 +24,24 @@ pub struct Draw {
 
 impl Draw {
   pub fn from(white_balls: [i8; 5], powerball: i8) -> Draw {
+    let mut sorted = white_balls.clone();
+    sorted.sort();
     Draw {
       powerball: powerball,
-      white_balls: white_balls,
+      white_balls: sorted,
     }
   }
 
   pub fn new() -> Draw {
     Draw::from(draw_white(), draw_powerball())
   }
+}
+
+impl PartialEq for Draw {
+  fn eq(&self, other: &Draw) -> bool {
+    self.white_balls == other.white_balls && self.powerball == other.powerball
+  }
+}
+
+impl Eq for Draw {
 }

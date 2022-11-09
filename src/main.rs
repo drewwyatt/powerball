@@ -1,7 +1,8 @@
-mod balls;
+mod models;
+use models::Draw;
 
 fn main() {
-    let winners = balls::Draw::new();
+    let winners = Draw::new();
 
     println!("white: {:?}", winners.white_balls);
     println!("powerball: {}", winners.powerball);
